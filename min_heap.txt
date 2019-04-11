@@ -1,0 +1,59 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+const int N = 362880;
+int heap[N];
+int hashmap[N];
+int heapSize=0;
+void filterUp(int start){
+    int parent=(start-1)>>1;
+    int temp=heap[start];
+    while(start>0){
+        if(temp>heap[parent])break;
+        heap[start]=heap[parent];
+        start=parent;
+        parent=(start-1)>>1;
+    }
+    heap[start]=temp;
+}
+void insert(int data){
+    heap[heapSize]=data;
+    filterUp(heapSize);
+    ++heapSize;
+}
+int top(){
+    return heap[0];
+}
+void filterDown(int start){
+    int child=start<<1|1;
+    int temp=heap[start];
+    while(child<heapSize){
+        if(child+1<heapSize&&heap[child+1]<heap[child])++child;
+        if(temp<heap[child])break;
+        heap[start]=heap[child];
+        start=child;
+        child=start<<1|1;
+    }
+    heap[start]=temp;
+}
+void pop(){
+    --heapSize;
+    heap[0]=heap[heapSize];
+    filterDown(0);
+}
+int main(){
+    int a[7]={8,15,10,21,34,16,12};
+    for(int i=0;i<7;++i){
+        insert(a[i]);
+        for(int j=0;j<heapSize;++j)cout<<heap[j]<<' ';
+        cout<<endl;
+    }
+    int t=heapSize;
+    for(int i=0;i<t;++i){
+        cout<<"min "<<top()<<endl;
+        pop();
+        for(int j=0;j<heapSize;++j)cout<<heap[j]<<' ';
+        cout<<endl;
+    }
+    return 0;
+}
