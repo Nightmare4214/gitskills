@@ -1,0 +1,28 @@
+The Linux Package Signing Keys
+Google’s Linux packages are signed with GNU Privacy Guard (GPG) keys. Google’s packages will automatically configure your package manager to verify product updates with the public signing key, but you may also install it separately if, for instance, you want to verify the integrity of an initial package download. Follow the instructions below to manually configure your package manager to use the keys.
+
+Key Details
+Download: https://dl.google.com/linux/linux_signing_key.pub
+Key ID: Google, Inc. Linux Package Signing Key <linux-packages-keymaster@google.com>
+Fingerprint: 4CCA 1EAF 950C EE4A B839 76DC A040 830F 7FAC 5991
+Google, Inc. (Linux Package Signing Authority) <linux-packages-keymaster@google.com>
+Fingerprint: EB4C 1BFD 4F04 2F6D DDCC EC91 7721 F63B D38B 4796
+Command line key installation for APT
+On an APT-based system (Debian, Ubuntu, etc.), download the key and then use apt to install it.
+
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+Recent versions of apt-get will automatically attempt to verify packages on download. If an appropriate key is not found or if the package is corrupted, you will get a message like the following:
+
+WARNING: The following packages cannot be authenticated!
+packagename
+Command line key installation for RPM
+On an RPM-based system (Fedora, SUSE, Mandriva, RHEL, etc.), download the key and then use rpm to install it.
+
+wget https://dl.google.com/linux/linux_signing_key.pub
+sudo rpm --import linux_signing_key.pub
+You can verify the key installation by running:
+
+rpm -qi gpg-pubkey-7fac5991-*
+To manually verify an RPM package, you can run the command:
+
+rpm --checksig -v packagename.rpm
